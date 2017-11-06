@@ -1205,9 +1205,10 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
             result = super.drawChild(canvas, child, drawingTime);
 
-            if (mCoveredFadeColor != 0 && mSlideOffset > 0) {
+            if (mCoveredFadeColor != 0 && mSlideOffset > 0 && mSlideOffset > mAnchorPoint) {
                 final int baseAlpha = (mCoveredFadeColor & 0xff000000) >>> 24;
-                final int imag = (int) (baseAlpha * mSlideOffset);
+                final double anchoredSlideOffset = (mSlideOffset - mAnchorPoint) * 1/(1-mAnchorPoint);
+                final int imag = (int) (baseAlpha * anchoredSlideOffset);
                 final int color = imag << 24 | (mCoveredFadeColor & 0xffffff);
                 mCoveredFadePaint.setColor(color);
                 canvas.drawRect(mTmpRect, mCoveredFadePaint);
