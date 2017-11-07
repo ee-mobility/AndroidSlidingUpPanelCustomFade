@@ -46,6 +46,7 @@
         android:background="#ffffff"
         android:orientation="vertical"
         android:clickable="true"
+        android:layout_weight="0.77"
         android:focusable="false"
         android:id="@+id/dragView">
 

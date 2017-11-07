@@ -102,6 +102,9 @@ public class DemoActivity extends AppCompatActivity {
             }
         });
 
+        mLayout.setAnchorPoint(0.4f);
+        mLayout.setPanelState(PanelState.ANCHORED);
+
         TextView t = (TextView) findViewById(R.id.name);
         t.setText(Html.fromHtml(getString(R.string.hello)));
         Button f = (Button) findViewById(R.id.follow);
@@ -130,44 +133,6 @@ public class DemoActivity extends AppCompatActivity {
             }
         }
         return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_toggle: {
-                if (mLayout != null) {
-                    if (mLayout.getPanelState() != PanelState.HIDDEN) {
-                        mLayout.setPanelState(PanelState.HIDDEN);
-                        item.setTitle(R.string.action_show);
-                    } else {
-                        mLayout.setPanelState(PanelState.COLLAPSED);
-                        item.setTitle(R.string.action_hide);
-                    }
-                }
-                return true;
-            }
-            case R.id.action_anchor: {
-                if (mLayout != null) {
-                    if (mLayout.getAnchorPoint() == 1.0f) {
-                        mLayout.setAnchorPoint(0.7f);
-                        mLayout.setPanelState(PanelState.ANCHORED);
-                        item.setTitle(R.string.action_anchor_disable);
-                    } else {
-                        mLayout.setAnchorPoint(1.0f);
-                        mLayout.setPanelState(PanelState.COLLAPSED);
-                        item.setTitle(R.string.action_anchor_enable);
-                    }
-                }
-                return true;
-            }
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
