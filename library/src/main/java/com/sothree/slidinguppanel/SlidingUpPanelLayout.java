@@ -958,6 +958,12 @@ public class SlidingUpPanelLayout extends ViewGroup {
     public boolean dispatchTouchEvent(MotionEvent ev) {
         final int action = MotionEventCompat.getActionMasked(ev);
 
+        // Not handling new touch events when the panel is dragging, because it stops the animation
+        // halfway leaving it in an incoherent state
+        if (mSlideState == PanelState.DRAGGING && ev.getAction() == MotionEvent.ACTION_DOWN) {
+            return true;
+        }
+
         if (!isEnabled() || !isTouchEnabled() || (mIsUnableToDrag && action != MotionEvent.ACTION_DOWN)) {
             mDragHelper.abort();
             return super.dispatchTouchEvent(ev);
