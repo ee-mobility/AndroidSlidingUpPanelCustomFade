@@ -15,5 +15,5 @@ allprojects {
 And then add this in your app `build.gradle`
 
 ```
-implementation 'com.github.dariobanfi:AndroidSlidingUpPanelCustomFade:3.3.4'
+implementation 'com.github.dariobanfi:AndroidSlidingUpPanelCustomFade:3.3.5'
 ```
