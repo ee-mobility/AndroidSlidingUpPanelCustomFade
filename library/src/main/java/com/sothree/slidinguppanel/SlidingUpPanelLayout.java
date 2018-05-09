@@ -297,7 +297,8 @@ public class SlidingUpPanelLayout extends ViewGroup {
                 mShadowHeight = ta.getDimensionPixelSize(R.styleable.SlidingUpPanelLayout_umanoShadowHeight, -1);
                 mParallaxOffset = ta.getDimensionPixelSize(R.styleable.SlidingUpPanelLayout_umanoParallaxOffset, -1);
 
-                mMinFlingVelocity = ta.getInt(R.styleable.SlidingUpPanelLayout_umanoFlingVelocity, DEFAULT_MIN_FLING_VELOCITY);
+                mMinFlingVelocity = ta.getInt(R.styleable.SlidingUpPanelLayout_umanoFlingVelocity,
+                        DEFAULT_MIN_FLING_VELOCITY);
                 mCoveredFadeColor = ta.getColor(R.styleable.SlidingUpPanelLayout_umanoFadeColor, DEFAULT_FADE_COLOR);
 
                 mDragViewResId = ta.getResourceId(R.styleable.SlidingUpPanelLayout_umanoDragView, -1);
@@ -308,7 +309,8 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
                 mAnchorPoint = ta.getFloat(R.styleable.SlidingUpPanelLayout_umanoAnchorPoint, DEFAULT_ANCHOR_POINT);
 
-                mSlideState = PanelState.values()[ta.getInt(R.styleable.SlidingUpPanelLayout_umanoInitialState, DEFAULT_SLIDE_STATE.ordinal())];
+                mSlideState = PanelState.values()[ta.getInt(R.styleable.SlidingUpPanelLayout_umanoInitialState,
+                        DEFAULT_SLIDE_STATE.ordinal())];
 
                 int interpolatorResId = ta.getResourceId(R.styleable.SlidingUpPanelLayout_umanoScrollInterpolator, -1);
                 if (interpolatorResId != -1) {
@@ -930,7 +932,8 @@ public class SlidingUpPanelLayout extends ViewGroup {
                 // Check if this was a click on the faded part of the screen, and fire off the listener if there is one.
                 if (ady <= dragSlop
                         && adx <= dragSlop
-                        && mSlideOffset > mAnchorPoint && !isViewUnder(mSlideableView, (int) mInitialMotionX, (int) mInitialMotionY) && mFadeOnClickListener != null) {
+                        && mSlideOffset > mAnchorPoint && !isViewUnder(mSlideableView, (int) mInitialMotionX, (int)
+                        mInitialMotionY) && mFadeOnClickListener != null) {
                     playSoundEffect(android.view.SoundEffectConstants.CLICK);
                     mFadeOnClickListener.onClick(this);
                     return true;
@@ -1105,7 +1108,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
     public void setPanelState(PanelState state) {
 
         // Abort any running animation, to allow state change
-        if(mDragHelper.getViewDragState() == ViewDragHelper.STATE_SETTLING){
+        if (mDragHelper.getViewDragState() == ViewDragHelper.STATE_SETTLING) {
             Log.d(TAG, "View is settling. Aborting animation.");
             mDragHelper.abort();
         }
@@ -1143,6 +1146,11 @@ public class SlidingUpPanelLayout extends ViewGroup {
         }
     }
 
+    public void setPanelHeight(int val, PanelState panelState) {
+        mSlideState = panelState;
+        setPanelHeight(val);
+    }
+
     private void setPanelStateInternal(PanelState state) {
         if (mSlideState == state) return;
         PanelState oldState = mSlideState;
@@ -1178,7 +1186,8 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
         if (mSlideOffset <= 0 && !mOverlayContent) {
             // expand the main view
-            lp.height = mIsSlidingUp ? (newTop - getPaddingBottom()) : (getHeight() - getPaddingBottom() - mSlideableView.getMeasuredHeight() - newTop);
+            lp.height = mIsSlidingUp ? (newTop - getPaddingBottom()) : (getHeight() - getPaddingBottom() -
+                    mSlideableView.getMeasuredHeight() - newTop);
             if (lp.height == defaultHeight) {
                 lp.height = LayoutParams.MATCH_PARENT;
             }
@@ -1213,7 +1222,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
             if (mCoveredFadeColor != 0 && mSlideOffset > 0 && mSlideOffset > mAnchorPoint) {
                 final int baseAlpha = (mCoveredFadeColor & 0xff000000) >>> 24;
-                final double anchoredSlideOffset = (mSlideOffset - mAnchorPoint) * 1/(1-mAnchorPoint);
+                final double anchoredSlideOffset = (mSlideOffset - mAnchorPoint) * 1 / (1 - mAnchorPoint);
                 final int imag = (int) (baseAlpha * anchoredSlideOffset);
                 final int color = imag << 24 | (mCoveredFadeColor & 0xffffff);
                 mCoveredFadePaint.setColor(color);
@@ -1342,7 +1351,8 @@ public class SlidingUpPanelLayout extends ViewGroup {
     public Parcelable onSaveInstanceState() {
         Bundle bundle = new Bundle();
         bundle.putParcelable("superState", super.onSaveInstanceState());
-        bundle.putSerializable(SLIDING_STATE, mSlideState != PanelState.DRAGGING ? mSlideState : mLastNotDraggingSlideState);
+        bundle.putSerializable(SLIDING_STATE, mSlideState != PanelState.DRAGGING ? mSlideState :
+                mLastNotDraggingSlideState);
         return bundle;
     }
 
